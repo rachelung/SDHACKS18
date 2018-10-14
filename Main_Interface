@@ -6,7 +6,11 @@ base = ["base 1", "base 2", "base 3", "base 4", "base 5"]
 toppings = ["Topping 1","Topping 2","Topping 3","Topping 4","Topping 5","Topping 6"]
 sweeteners = ["sweetener 1","sweetener 2","sweetener 3"]
 ice = ["ice 1","ice 2","ice 3"]
-milkBase = ["milk 1","milk 2","milk 3","milk 4","milk 5","milk 6"]
+base1 = ["base1 1","base1 2","base1 3","base1 4"]
+base2 = ["base2 1", "base2 2", "base2 3" , "base2 4"]
+base3 = ["base3 1", "base3 2", "base3 3"]
+base4 = ["base4 1", "base4 2"]
+base5 = ["base5 1", "base5 1", "base5 1"]
 
 chosenBase = None
 chosenTopping = None
@@ -17,7 +21,7 @@ chosenIce = None
 iceFrame = None
 sweetFrame = None
 toppingsFrame = None
-milkFrame = None
+baseVer2Frame = None
 baseFrame = None
 openFrame = Frame(root, width = 1000, height = 1000)
 
@@ -43,11 +47,32 @@ def makeStringId(num, cat):
         for i in range(cat):
             stringOnCrack = ice[i]
             stringIdArray.append(stringOnCrack)
+    if (num == 6):
+        for i in range(cat):
+            stringOnCrack = base1[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 7):
+        for i in range(cat):
+            stringOnCrack = base2[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 8):
+        for i in range(cat):
+            stringOnCrack = base3[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 9):
+        for i in range(cat):
+            stringOnCrack = base4[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 10):
+        for i in range(cat):
+            stringOnCrack = base5[i]
+            stringIdArray.append(stringOnCrack)
+
     print(stringIdArray)
     return stringIdArray
 
 def makeButtonArray(frame, num, cat):
-    drinkBases = []
+    #drinkBases = []
     baseButton = [None] * cat
     textStrings = makeStringId(num, cat)
     for i in range(cat):
@@ -68,67 +93,58 @@ def onClick(label):
     global toppingsFrame
     global sweetFrame
     global iceFrame
-    global chosenBase
+    global baseVer2Frame
     global chosenTopping
     global chosenSweeteners
     global chosenIce
+    global chosenBase
+    choiceMaker = label
     if (control == 0):
         openFrame.destroy()
         baseFrame = makeNxtFrame(baseFrame, 1, 5)
-        buttonMilk = Button(baseFrame, text= "this one is boba", command=lambda l = label: diffClick(l)).pack()
-        baseFrame.pack()
-        control = 2
+        control = 1
     elif (control == 1):
-        milkFrame.destroy()
-        toppingsFrame = makeNxtFrame(toppingsFrame, 3, 6)
-        chosenBase = label
-        print(chosenBase)
-        control = 3
-    elif (control == 2):
         baseFrame.destroy()
+        if choiceMaker == base[0]:
+            baseVer2Frame = makeNxtFrame(baseFrame, 6, 4)
+        elif(choiceMaker == base[1]):
+            baseVer2Frame = makeNxtFrame(baseFrame, 7, 4)
+        elif(choiceMaker == base[2]):
+            baseVer2Frame = makeNxtFrame(baseFrame, 8, 3)
+        elif(choiceMaker == base[3]):
+            baseVer2Frame = makeNxtFrame(baseFrame, 9, 2)
+        elif(choiceMaker == base[4]):
+            baseVer2Frame = makeNxtFrame(baseFrame, 5, 3)
+        control = 2
+    elif (control == 2):
+        baseVer2Frame.destroy()
         toppingsFrame = makeNxtFrame(toppingsFrame,3, 6)
-        chosenTopping = label
-        print(chosenTopping)
         control = 3
+        chosenBase = choiceMaker
     elif (control == 3):
         toppingsFrame.destroy()
         sweetFrame = makeNxtFrame(sweetFrame, 4, 3)
-        chosenSweeteners = label
-        print(chosenSweeteners)
         control = 4
+        chosenTopping = choiceMaker
     elif (control == 4):
         sweetFrame.destroy()
         iceFrame = makeNxtFrame(iceFrame, 5, 3)
-        chosenSweeteners = label
-        print(chosenSweeteners)
         control = 5
+        chosenSweeteners = choiceMaker
     elif (control == 5):
-        chosenIce = label
         iceFrame.destroy()
+        chosenIce = choiceMaker
+       #tests:
         print(chosenIce)
-
-        print(chosenTopping)
-        print(chosenIce)
+        print(chosenBase)
         print(chosenSweeteners)
         print(chosenTopping)
-        print(chosenIce)
-
-def diffClick(label):
-    global control
-    global milkFrame
-    global chosenMilkBase
-    baseFrame.destroy()
-    control = 1
-    milkFrame = Frame(root, width = 1000, height = 1000)
-    makeButtonArray(milkFrame, 2, 6)
-    milkFrame.pack()
-
+        print(chosenBase)
 
 text1 = "click me"
 button1 = Button(openFrame, text = text1, command = lambda l = text1: onClick(l))
 button1.pack()
 openFrame.pack()
-
 
 
 root.mainloop()
