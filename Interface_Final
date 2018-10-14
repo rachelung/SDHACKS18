@@ -1,0 +1,155 @@
+from tkinter import *
+root = Tk()
+control = 0
+
+base = ["classic", "tea", "slushie", "coffee", "yogurt"]
+toppings = ["honey boba","grass jelly","pudding", "salted cheese"]
+sweeteners = ["no sugar","half sugar","full sugar"]
+ice = ["no ice","half ice","full ice"]
+classic = ["milk tea","thai","coffee","taro"]
+tea = ["wintermelon tea", "mango green tea", "lemon green tea" , "black tea"]
+slushie = ["matcha", "red bean", "taro"]
+coffee = ["italian mocha", "caramel machiato"]
+yogurt = ["green tea yogurt", "orange yogurt", "grapefruit yogurt"]
+
+chosenBase = None
+chosenTopping = None
+chosenSweeteners = None
+chosenIce = None
+
+
+iceFrame = None
+sweetFrame = None
+toppingsFrame = None
+baseVer2Frame = None
+baseFrame = None
+openFrame = Frame(root, width = 1000, height = 1000)
+
+def makeStringId(num, cat):
+    stringIdArray = []
+    if (num == 1):
+        for i in range(cat):
+            stringOnCrack = base[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 2):
+        for i in range(cat):
+            stringOnCrack = milkBase[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 3):
+        for i in range(cat):
+            stringOnCrack = toppings[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 4):
+        for i in range(cat):
+            stringOnCrack = sweeteners[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 5):
+        for i in range(cat):
+            stringOnCrack = ice[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 6):
+        for i in range(cat):
+            stringOnCrack = classic[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 7):
+        for i in range(cat):
+            stringOnCrack = tea[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 8):
+        for i in range(cat):
+            stringOnCrack = slushie[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 9):
+        for i in range(cat):
+            stringOnCrack = coffee[i]
+            stringIdArray.append(stringOnCrack)
+    if (num == 10):
+        for i in range(cat):
+            stringOnCrack = yogurt[i]
+            stringIdArray.append(stringOnCrack)
+
+    print(stringIdArray)
+    return stringIdArray
+
+def makeButtonArray(frame, num, cat):
+    #drinkBases = []
+    baseButton = [None] * cat
+    textStrings = makeStringId(num, cat)
+    for i in range(cat):
+        label = textStrings[i]
+        baseButton[i] = Button(frame, text = label, command = lambda l = label: onClick(l))
+        baseButton[i].pack()
+
+def makeNxtFrame(frame, num, cat):
+    frame = Frame(root, width = 1000, height = 1000)
+    makeButtonArray(frame, num, cat)
+    frame.pack()
+    return frame
+
+
+def onClick(label):
+    global control
+    global baseFrame
+    global toppingsFrame
+    global sweetFrame
+    global iceFrame
+    global baseVer2Frame
+    global chosenTopping
+    global chosenSweeteners
+    global chosenIce
+    global chosenBase
+    choiceMaker = label
+    if (control == 0):
+        openFrame.destroy()
+        baseFrame = makeNxtFrame(baseFrame, 1, 5)
+        control = 1
+    elif (control == 1):
+        baseFrame.destroy()
+        if choiceMaker == base[0]:
+            baseVer2Frame = makeNxtFrame(baseVer2Frame, 6, 4)
+        elif(choiceMaker == base[1]):
+            baseVer2Frame = makeNxtFrame(baseVer2Frame, 7, 4)
+        elif(choiceMaker == base[2]):
+            baseVer2Frame = makeNxtFrame(baseVer2Frame, 8, 3)
+        elif(choiceMaker == base[3]):
+            baseVer2Frame = makeNxtFrame(baseVer2Frame, 9, 2)
+        elif(choiceMaker == base[4]):
+            baseVer2Frame = makeNxtFrame(baseVer2Frame, 10, 3)
+        control = 2
+    elif (control == 2):
+        baseVer2Frame.destroy()
+        toppingsFrame = makeNxtFrame(toppingsFrame,3, 4)
+        control = 3
+        chosenBase = choiceMaker
+    elif (control == 3):
+        toppingsFrame.destroy()
+        sweetFrame = makeNxtFrame(sweetFrame, 4, 3)
+        control = 4
+        chosenTopping = choiceMaker
+    elif (control == 4):
+        sweetFrame.destroy()
+        iceFrame = makeNxtFrame(iceFrame, 5, 3)
+        control = 5
+        chosenSweeteners = choiceMaker
+    elif (control == 5):
+        iceFrame.destroy()
+        chosenIce = choiceMaker
+
+
+text1 = "click me"
+button1 = Button(openFrame, text = text1, command = lambda l = text1: onClick(l))
+button1.pack()
+openFrame.pack()
+
+def getChosenIce():
+    return chosenIce
+def getChosenBase():
+    return chosenBase
+def getChosenSweeteners():
+    return chosenSweeteners
+def getChosenTopping():
+    return chosenTopping
+def getRoot():
+    return root
+
+root.mainloop()
