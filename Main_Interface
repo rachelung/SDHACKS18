@@ -2,6 +2,18 @@ from tkinter import *
 root = Tk()
 control = 0
 
+base = ["base 1", "base 2", "base 3", "base 4", "base 5"]
+toppings = ["Topping 1","Topping 2","Topping 3","Topping 4","Topping 5","Topping 6"]
+sweeteners = ["sweetener 1","sweetener 2","sweetener 3"]
+ice = ["ice 1","ice 2","ice 3"]
+milkBase = ["milk 1","milk 2","milk 3","milk 4","milk 5","milk 6"]
+
+chosenBase = None
+chosenTopping = None
+chosenSweeteners = None
+chosenIce = None
+
+
 iceFrame = None
 sweetFrame = None
 toppingsFrame = None
@@ -13,23 +25,23 @@ def makeStringId(num, cat):
     stringIdArray = []
     if (num == 1):
         for i in range(cat):
-            stringOnCrack = "Base: " + str(i + 1)
+            stringOnCrack = base[i]
             stringIdArray.append(stringOnCrack)
     if (num == 2):
         for i in range(cat):
-            stringOnCrack = "Milk Base: " + str(i + 1)
+            stringOnCrack = milkBase[i]
             stringIdArray.append(stringOnCrack)
     if (num == 3):
         for i in range(cat):
-            stringOnCrack = "Topping : " + str(i + 1)
+            stringOnCrack = toppings[i]
             stringIdArray.append(stringOnCrack)
     if (num == 4):
         for i in range(cat):
-            stringOnCrack = "Sweetness Level: " + str(i + 1)
+            stringOnCrack = sweeteners[i]
             stringIdArray.append(stringOnCrack)
     if (num == 5):
         for i in range(cat):
-            stringOnCrack = "Ice " + str(i + 1)
+            stringOnCrack = ice[i]
             stringIdArray.append(stringOnCrack)
     print(stringIdArray)
     return stringIdArray
@@ -37,10 +49,10 @@ def makeStringId(num, cat):
 def makeButtonArray(frame, num, cat):
     drinkBases = []
     baseButton = [None] * cat
-    textForBases = makeStringId(num, cat)
+    textStrings = makeStringId(num, cat)
     for i in range(cat):
-        print("real quick")
-        baseButton[i] = Button(frame, text = textForBases[i], command = onClick)
+        label = textStrings[i]
+        baseButton[i] = Button(frame, text = label, command = lambda l = label: onClick(l))
         baseButton[i].pack()
 
 def makeNxtFrame(frame, num, cat):
@@ -48,52 +60,75 @@ def makeNxtFrame(frame, num, cat):
     makeButtonArray(frame, num, cat)
     frame.pack()
     return frame
-    print("this is working")
 
 
-def onClick():
+def onClick(label):
     global control
     global baseFrame
     global toppingsFrame
     global sweetFrame
     global iceFrame
+    global chosenBase
+    global chosenTopping
+    global chosenSweeteners
+    global chosenIce
     if (control == 0):
         openFrame.destroy()
         baseFrame = makeNxtFrame(baseFrame, 1, 5)
-        buttonMilk = Button(baseFrame, text="this one is boba", command=diffClick).pack()
+        buttonMilk = Button(baseFrame, text= "this one is boba", command=lambda l = label: diffClick(l)).pack()
         baseFrame.pack()
         control = 2
     elif (control == 1):
         milkFrame.destroy()
         toppingsFrame = makeNxtFrame(toppingsFrame, 3, 6)
+        chosenBase = label
+        print(chosenBase)
         control = 3
     elif (control == 2):
         baseFrame.destroy()
         toppingsFrame = makeNxtFrame(toppingsFrame,3, 6)
+        chosenTopping = label
+        print(chosenTopping)
         control = 3
     elif (control == 3):
         toppingsFrame.destroy()
         sweetFrame = makeNxtFrame(sweetFrame, 4, 3)
+        chosenSweeteners = label
+        print(chosenSweeteners)
         control = 4
     elif (control == 4):
         sweetFrame.destroy()
         iceFrame = makeNxtFrame(iceFrame, 5, 3)
+        chosenSweeteners = label
+        print(chosenSweeteners)
         control = 5
     elif (control == 5):
+        chosenIce = label
         iceFrame.destroy()
+        print(chosenIce)
 
-def diffClick():
+        print(chosenTopping)
+        print(chosenIce)
+        print(chosenSweeteners)
+        print(chosenTopping)
+        print(chosenIce)
+
+def diffClick(label):
     global control
     global milkFrame
+    global chosenMilkBase
     baseFrame.destroy()
     control = 1
     milkFrame = Frame(root, width = 1000, height = 1000)
     makeButtonArray(milkFrame, 2, 6)
     milkFrame.pack()
-    print("is this working?")
 
-button1 = Button(openFrame, text = "click me", command = onClick)
+
+text1 = "click me"
+button1 = Button(openFrame, text = text1, command = lambda l = text1: onClick(l))
 button1.pack()
 openFrame.pack()
+
+
 
 root.mainloop()
