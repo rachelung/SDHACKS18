@@ -1,0 +1,54 @@
+from tkinter import *
+import mainUpdate
+
+Testing = mainUpdate
+
+bestBase = None
+bestTopping = None
+bestPlace = None
+
+myBase = Testing.getChosenBase()
+myIce = Testing.getChosenIce()
+myToppings = Testing.getChosenTopping()
+mySweetness = Testing.getChosenSweeteners()
+
+kungFuBase = ["milk tea", "thai","coffee","taro","wintermelon tea", "mango green tea", "lemon green tea" ,
+              "matcha", "taro", "italian mocha", "caramel machiato"]
+OOTBase = ["black tea", "red bean","green tea yogurt", "orange yogurt", "grapefruit yogurt"]
+
+def suitableBase(myBase):
+    global bestBase
+    if(myBase in kungFuBase):
+        bestBase = "KungFu"
+    elif(myBase in OOTBase):
+        bestBase = "OOT"
+    return bestBase
+
+
+def suitableTopping(myTopping):
+    global bestTopping
+    if (myTopping == "pudding"):
+        bestTopping = "OOT"
+    elif(myTopping == "salted cheese"):
+        bestTopping = "HappyLemon"
+    return bestTopping
+
+
+bestBase = suitableBase(myBase)
+bestTopping = suitableTopping(myToppings)
+
+if(bestTopping == "HappyLemon"):
+    if(bestBase != "OOT"):
+        bestTopping = "HappyLemon"
+    else:
+        bestTopping = "OOT"
+
+def finalBestPlace(base, topping):
+    if (base == topping or topping == None):
+        return base
+    else:
+        return topping
+
+bestPlace = finalBestPlace(bestBase,bestTopping)
+
+print(bestPlace)
